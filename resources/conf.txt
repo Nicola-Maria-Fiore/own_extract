@@ -1,0 +1,9 @@
+excel_path		-->C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE
+sleep_time download	-->20 
+sleep_time save		-->5
+sleep_time wait		-->5
+formula			-->=@RDP.Data("INSERT","TR.HoldingsDate;TR.EarliestHoldingsDate;TR.PctOfSharesOutHeld;TR.SharesHeld;TR.SharesHeldValue;TR.InvestorFullName;TR.FilingType;TR.InvParentType;TR.OwnTrnverRating;TR.OwnTrnverRatingCode;TR.OwnTurnover;TR.NbrOfInstrHeldByI"&"nv;TR.NbrOfInstrBoughtByInv;TR.NbrOfInstrSoldByInv;TR.PctPortfolio;TR.InvestorType;TR.InvInvestmentStyleCode;TR.InvInvmtOrientation;TR.InvestorRegion;TR.InvAddrCountry","SDate=YEAR-12-31 CH=Fd RH=IN",A2)
+
+
+
+

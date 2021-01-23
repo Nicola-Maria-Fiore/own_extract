@@ -1,15 +1,18 @@
+from openpyxl import load_workbook
 import xlsxwriter
 import keyboard
 import time
+import sys
 import os
 
 out = "results/"
-company = "company.csv"
-year = "year.csv"
+company = "resources/list of firms.csv"
+year = "resources/period.csv"
+conf = "resources/conf.txt"
 
-sheets = 5
-excel_path = "C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"
-formula = '=@RDP.Data("INSERT","TR.HoldingsDate;TR.EarliestHoldingsDate;TR.PctOfSharesOutHeld;TR.SharesHeld;TR.SharesHeldValue;TR.InvestorFullName;TR.FilingType;TR.InvParentType;TR.OwnTrnverRating;TR.OwnTrnverRatingCode;TR.OwnTurnover;TR.NbrOfInstrHeldByI"&"nv;TR.NbrOfInstrBoughtByInv;TR.NbrOfInstrSoldByInv;TR.PctPortfolio;TR.InvestorType;TR.InvInvestmentStyleCode;TR.InvInvmtOrientation;TR.InvestorRegion;TR.InvAddrCountry","SDate=YEAR-12-31 CH=Fd RH=IN",A1)'
+excel_path = None
+times = []
+formula = None
 
 def createXslc(comapny_id, year_list):
     workbook = xlsxwriter.Workbook(out+comapny_id+'.xlsx')
@@ -26,11 +29,11 @@ def openFiles(companies):
         f_path = out + c + ".xlsx"
         f_path = os.path.abspath(f_path)
         os.system('start "{}" "{}"'.format(excel_path,f_path))
-        time.sleep(20)
+        time.sleep(times[0])
         keyboard.send('ctrl+s')
-        time.sleep(5)
+        time.sleep(times[1])
         keyboard.send('alt+F4')
-        time.sleep(3)
+        time.sleep(times[2])
 
 def readFile(fname):
     result = []
@@ -39,13 +42,35 @@ def readFile(fname):
             result.append(line.strip().replace('\n',""))
     return result
 
+def getConf(s):
+    return ((s.split("-->"))[1]).strip()
+
+def addRIC(companies):
+    for c in companies:
+        f_path = out + c + ".xlsx"
+        workbook = load_workbook(f_path)
+        for worksheet in workbook.worksheets:
+            worksheet['A2'] = "RIC"
+        workbook.save(f_path)
+
 if __name__ == "__main__":
     companies = readFile(company)
     years = readFile(year)
 
-    for c in companies:
-        createXslc(c,years)
-    
-    openFiles(companies)
+    configurations = readFile(conf)
+    excel_path = getConf(configurations[0])
+    formula = getConf(configurations[4])
+    times = configurations[1:4]
+    for i in range(0, len(times)):
+        times[i] = int(getConf(times[i]))  
+
+    if len(sys.argv)>1 and sys.argv[1] == "-c": 
+        for c in companies:
+            createXslc(c,years) 
+    elif len(sys.argv)>1 and sys.argv[1] == "-o":     
+        #openFiles(companies)
+        addRIC(companies)
+    else:
+        print("Read instructions") 
    
     print("Done!")
