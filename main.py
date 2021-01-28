@@ -5,7 +5,8 @@ import time
 import sys
 import os
 
-out = "results/"
+out = "results/Excel Empty/"
+out_original = "results/Excel Original/"
 company = "resources/list of firms.csv"
 year = "resources/period.csv"
 conf = "resources/conf.txt"
@@ -15,14 +16,15 @@ times = []
 formula = None
 
 def createXslc(comapny_id, year_list):
-    workbook = xlsxwriter.Workbook(out+comapny_id+'.xlsx')
+    for o in [out,out_original]:
+        workbook = xlsxwriter.Workbook(o+comapny_id+'.xlsx')
 
-    for y in year_list:
-        worksheet = workbook.add_worksheet()
-        content = formula.replace("INSERT",comapny_id).replace("YEAR",y)
-        worksheet.write('A1', content)
-    
-    workbook.close()
+        for y in year_list:
+            worksheet = workbook.add_worksheet(y)
+            content = formula.replace("INSERT",comapny_id).replace("YEAR",y)
+            worksheet.write('A1', content)
+        
+        workbook.close()
 
 def openFiles(companies):
     for c in companies:
@@ -45,13 +47,14 @@ def readFile(fname):
 def getConf(s):
     return ((s.split("-->"))[1]).strip()
 
-def addRIC(companies):
-    for c in companies:
-        f_path = out + c + ".xlsx"
-        workbook = load_workbook(f_path)
-        for worksheet in workbook.worksheets:
-            worksheet['A2'] = "RIC"
-        workbook.save(f_path)
+
+#def addRIC(companies):
+#    for c in companies:
+#       f_path = out + c + ".xlsx"
+#        workbook = load_workbook(f_path)
+#        for worksheet in workbook.worksheets:
+#            worksheet['A2'] = "RIC"
+#        workbook.save(f_path)
 
 if __name__ == "__main__":
     companies = readFile(company)
@@ -64,10 +67,10 @@ if __name__ == "__main__":
     for i in range(0, len(times)):
         times[i] = int(getConf(times[i]))  
 
-    if len(sys.argv)>1 and sys.argv[1] == "-c": 
+    if len(sys.argv)>1 and sys.argv[1] == "-a": 
         for c in companies:
             createXslc(c,years) 
-    elif len(sys.argv)>1 and sys.argv[1] == "-o":     
+    elif len(sys.argv)>1 and sys.argv[1] == "-b":     
         #openFiles(companies)
         addRIC(companies)
     else:
