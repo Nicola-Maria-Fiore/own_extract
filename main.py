@@ -73,6 +73,7 @@ def createDo(companies, years):
 
 if __name__ == "__main__":
     companies = readFile(company)
+    companies = [c for c in companies if c!="#NA"]
     years = readFile(year)
 
     configurations = readFile(conf)
