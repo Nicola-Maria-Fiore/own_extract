@@ -32,7 +32,7 @@ def createXslc(comapny_id, year_list):
 
 def openFiles(companies):
     for c in companies:
-        f_path = out + c + ".xlsx"
+        f_path = out_original + c + ".xlsx"
         f_path = os.path.abspath(f_path)
         os.system('start "{}" "{}"'.format(excel_path,f_path))
         time.sleep(times[0])
