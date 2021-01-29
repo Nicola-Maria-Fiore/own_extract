@@ -1,11 +1,18 @@
 Install requirements
-pip install -r requirements.txt
+
+`pip install -r requirements.txt`
+
 
 Create files
-py main.py -c
 
-Open and Save files
-py main.py -o
+`py main.py -a`
 
-Add RIC as Column Title
-py main.py -a
+
+Open and Save files in Excel Empty
+
+`py main.py -b`
+
+
+Generate "do" files
+
+`py main.py -c`

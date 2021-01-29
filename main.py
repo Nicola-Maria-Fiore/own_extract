@@ -7,7 +7,10 @@ import os
 
 out = "results/Excel Empty/"
 out_original = "results/Excel Original/"
-do_output = "results/"
+
+doImport_output = "results/Do Files/import.do"
+doAppend_output = "results/Do Files/append.do"
+
 company = "resources/list of firms.csv"
 year = "resources/period.csv"
 conf = "resources/conf.txt"
@@ -48,21 +51,24 @@ def readFile(fname):
 def getConf(s):
     return ((s.split("-->"))[1]).strip()
 
-
-#def addRIC(companies):
-#    for c in companies:
-#       f_path = out + c + ".xlsx"
-#        workbook = load_workbook(f_path)
-#        for worksheet in workbook.worksheets:
-#            worksheet['A2'] = "RIC"
-#        workbook.save(f_path)
-
-
 def createDo(companies, years):
-    content = ""
+    importDo = ""
+    appendDo = ""
+    first = True
     for c in companies:
         for y in years:
-            content += 'import "{}.xlsx", sheet("{}") cellrange(A2) firstrow \n save "{}_{}.dta" \n'.format(c,y,c,y)
+            importDo += 'import "{}.xlsx", sheet("{}") cellrange(A2) firstrow \n save "{}_{}.dta" \n'.format(c,y,c,y)
+            if first: 
+                appendDo += 'use "{}_{}.dta" \n'.format(c,y)
+                first = False
+            else:
+                appendDo += 'append "{}_{}.dta" \n'.format(c,y)
+
+    with open(doImport_output, 'w') as f:
+        f.write(importDo)
+    
+    with open(doAppend_output, 'w') as f:
+        f.write(appendDo)
     
 
 if __name__ == "__main__":
@@ -76,13 +82,17 @@ if __name__ == "__main__":
     for i in range(0, len(times)):
         times[i] = int(getConf(times[i]))  
 
-    if len(sys.argv)>1 and sys.argv[1] == "-a": 
-        for c in companies:
-            createXslc(c,years) 
-    elif len(sys.argv)>1 and sys.argv[1] == "-b":     
-        #openFiles(companies)
-        addRIC(companies)
+    if len(sys.argv)>1:
+        if sys.argv[1] == "-a": 
+            for c in companies:
+                createXslc(c,years) 
+        elif sys.argv[1] == "-b":     
+            openFiles(companies)
+        elif sys.argv[1] == "-c": 
+            createDo(companies, years)
+        else:
+            print("Error: Read instructions")
     else:
-        print("Read instructions") 
+        print("Error: Read instructions") 
    
     print("Done!")

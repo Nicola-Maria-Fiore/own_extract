@@ -1,4 +1,4 @@
-excel_path		-->C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE
+excel_path		-->C:\Program Files\Microsoft Office\Office16\EXCEL.EXE
 sleep_time download	-->20 
 sleep_time save		-->5
 sleep_time wait		-->5
