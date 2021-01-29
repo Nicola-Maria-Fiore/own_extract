@@ -7,6 +7,7 @@ import os
 
 out = "results/Excel Empty/"
 out_original = "results/Excel Original/"
+do_output = "results/"
 company = "resources/list of firms.csv"
 year = "resources/period.csv"
 conf = "resources/conf.txt"
@@ -55,6 +56,14 @@ def getConf(s):
 #        for worksheet in workbook.worksheets:
 #            worksheet['A2'] = "RIC"
 #        workbook.save(f_path)
+
+
+def createDo(companies, years):
+    content = ""
+    for c in companies:
+        for y in years:
+            content += 'import "{}.xlsx", sheet("{}") cellrange(A2) firstrow \n save "{}_{}.dta" \n'.format(c,y,c,y)
+    
 
 if __name__ == "__main__":
     companies = readFile(company)
