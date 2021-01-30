@@ -57,7 +57,7 @@ def createDo(companies, years):
     first = True
     for c in companies:
         for y in years:
-            importDo += 'import excel using "{}.xlsx", sheet("{}") cellrange(A2) firstrow \n save "{}_{}.dta" \n'.format(c,y,c,y)
+            importDo += 'import excel using "{}.xlsx", sheet("{}") cellrange(A2) firstrow \n save "{}_{}.dta" \n clear all \n'.format(c,y,c,y)
             if first: 
                 appendDo += 'use "{}_{}.dta" \n'.format(c,y)
                 first = False
