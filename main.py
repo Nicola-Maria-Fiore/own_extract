@@ -8,8 +8,8 @@ import os
 out = "results/Excel Empty/"
 out_original = "results/Excel Original/"
 
-doImport_output = "results/Do Files/import.do"
-doAppend_output = "results/Do Files/append.do"
+doImport_output = "results/Do Files/1 import.do"
+doAppend_output = "results/Do Files/2 append.do"
 
 company = "resources/list of firms.csv"
 year = "resources/period.csv"
