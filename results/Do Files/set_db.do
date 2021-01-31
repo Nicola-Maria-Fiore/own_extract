@@ -1,20 +1,31 @@
-rename _all,lower
-drop if investorfullname=="NULL"
+*rename vars
+rename a ric
+rename l investor_turnover_percentage
+rename o inv_port_n_secs_sold
+*rename other vars?
 
-rename A RIC
-rename L investor_turnover_percentage
-rename O investor_portfolio_number_of_securities_sold
+*label vars
+label var ric "RIC"
+label var investor_turnover_percentage "Investor Turnover Percentage"
+label var inv_port_n_secs_sold "Investor Portfolio Number of Securities Sold"
 
-gen holdingsfilingdate_new=.
-replace holdingsfilingdate_new = date(holdingsfilingdate, "MDY")
-drop holdingsfilingdate
-rename holdingsfilingdate_new holdingsfilingdate
-format holdingsfilingdate %td
+*replace "NULL" with "."
+ds, has(type string)
+foreach v in `r(varlist)' {
+	replace `v' ="." if `v'=="NULL"
+	}
 
-gen earliestholdingsdate_new=.
-replace earliestholdingsdate_new = date(earliestholdingsdate, "MDY")
-drop earliestholdingsdate
-rename earliestholdingsdate_new earliestholdingsdate
-format earliestholdingsdate %td
+*destring all vars
+destring, replace
 
-save "ownership.dta"
+*generate date vars
+gen holdings_filing_date_new=.
+replace holdings_filing_date = date(holdingsfilingdate, "MDY")
+format holdings_filing_date %td
+gen earliest_holdings_date_new=.
+replace earliest_holdings_date = date(earliestholdingsdate, "MDY")
+format earliest_holdings_date %td
+
+save "ownership_clean.dta"
+
+
