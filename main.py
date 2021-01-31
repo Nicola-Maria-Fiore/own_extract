@@ -19,13 +19,13 @@ excel_path = None
 times = []
 formula = None
 
-def createXslc(comapny_id, year_list):
+def createXslc(company_id, year_list):
     for o in [out,out_original]:
-        workbook = xlsxwriter.Workbook(o+comapny_id+'.xlsx')
+        workbook = xlsxwriter.Workbook(o+company_id+'.xlsx')
 
         for y in year_list:
             worksheet = workbook.add_worksheet(y)
-            content = formula.replace("INSERT",comapny_id).replace("YEAR",y)
+            content = formula.replace("INSERT",company_id).replace("YEAR",y)
             worksheet.write('A1', content)
         
         workbook.close()
