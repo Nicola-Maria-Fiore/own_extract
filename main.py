@@ -62,7 +62,7 @@ def createDo(companies, years):
                 appendDo += 'use "{}_{}.dta" \n'.format(c,y)
                 first = False
             else:
-                appendDo += 'append "{}_{}.dta" \n'.format(c,y)
+                appendDo += 'append using "{}_{}.dta" \n'.format(c,y)
 
     with open(doImport_output, 'w') as f:
         f.write(importDo)
