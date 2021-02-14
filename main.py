@@ -8,8 +8,8 @@ import os
 out = "results/Excel Empty/"
 out_original = "results/Excel Original/"
 
-doImport_output = "results/Do Files/import.do"
-doAppend_output = "results/Do Files/append.do"
+doImport_output = "results/Do Files/1 import.do"
+doAppend_output = "results/Do Files/2 append.do"
 
 company = "resources/list of firms.csv"
 year = "resources/period.csv"
@@ -19,13 +19,13 @@ excel_path = None
 times = []
 formula = None
 
-def createXslc(comapny_id, year_list):
+def createXslc(company_id, year_list):
     for o in [out,out_original]:
-        workbook = xlsxwriter.Workbook(o+comapny_id+'.xlsx')
+        workbook = xlsxwriter.Workbook(o+company_id+'.xlsx')
 
         for y in year_list:
             worksheet = workbook.add_worksheet(y)
-            content = formula.replace("INSERT",comapny_id).replace("YEAR",y)
+            content = formula.replace("INSERT",company_id).replace("YEAR",y)
             worksheet.write('A1', content)
         
         workbook.close()
@@ -57,12 +57,12 @@ def createDo(companies, years):
     first = True
     for c in companies:
         for y in years:
-            importDo += 'import "{}.xlsx", sheet("{}") cellrange(A2) firstrow \n save "{}_{}.dta" \n'.format(c,y,c,y)
+            importDo += 'import excel using "{}.xlsx", sheet("{}") cellrange(A2) firstrow case(lower) allstring \n save "{}_{}.dta" \n clear all \n'.format(c,y,c,y)
             if first: 
                 appendDo += 'use "{}_{}.dta" \n'.format(c,y)
                 first = False
             else:
-                appendDo += 'append "{}_{}.dta" \n'.format(c,y)
+                appendDo += 'append using "{}_{}.dta" \n'.format(c,y)
 
     with open(doImport_output, 'w') as f:
         f.write(importDo)
