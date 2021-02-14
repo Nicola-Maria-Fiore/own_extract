@@ -78,7 +78,7 @@ def checkFiles(companies):
         sheet = xlsx_file.active
         value = sheet.cell(row=2, column=2).value 
         if value==None or len(value)==0:
-            print(f_path)
+            print(c + ".xlsx")
 
 
 if __name__ == "__main__":
