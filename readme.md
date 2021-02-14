@@ -16,3 +16,7 @@ Open and Save files in Excel Empty
 Generate "do" files
 
 `py main.py -c`
+
+Check generated files
+
+`py main.py -c`

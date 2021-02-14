@@ -71,6 +71,16 @@ def createDo(companies, years):
         f.write(appendDo)
     
 
+def checkFiles(companies):
+    for c in companies:
+        f_path = out_original + c + ".xlsx"
+        xlsx_file = load_workbook(f_path)
+        sheet = xlsx_file.active
+        value = sheet.cell(row=2, column=2).value 
+        if value==None or len(value)==0:
+            print(f_path)
+
+
 if __name__ == "__main__":
     companies = readFile(company)
     companies = [c for c in companies if c!="#N/A"]
@@ -91,6 +101,8 @@ if __name__ == "__main__":
             openFiles(companies)
         elif sys.argv[1] == "-c": 
             createDo(companies, years)
+        elif sys.argv[1] == "-d": 
+            checkFiles(companies)
         else:
             print("Error: Read instructions")
     else:
