@@ -1,4 +1,5 @@
 from openpyxl import load_workbook
+from EikonAPI import EikonDownloader
 import xlsxwriter
 import keyboard
 import time
@@ -102,7 +103,7 @@ if __name__ == "__main__":
         elif sys.argv[1] == "-c": 
             createDo(companies, years)
         elif sys.argv[1] == "-d": 
-            checkFiles(companies)
+            EikonDownloader(companies)
         else:
             print("Error: Read instructions")
     else:
