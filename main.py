@@ -103,7 +103,7 @@ if __name__ == "__main__":
         elif sys.argv[1] == "-c": 
             createDo(companies, years)
         elif sys.argv[1] == "-d": 
-            EikonDownloader(companies)
+            EikonDownloader()
         else:
             print("Error: Read instructions")
     else:
