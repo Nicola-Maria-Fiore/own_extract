@@ -96,14 +96,16 @@ if __name__ == "__main__":
 
     if len(sys.argv)>1:
         if sys.argv[1] == "-a": 
+            EikonDownloader(companies,years)
+        elif sys.argv[1] == "-c": 
             for c in companies:
                 createXslc(c,years) 
-        elif sys.argv[1] == "-b":     
+        elif sys.argv[1] == "-d":     
             openFiles(companies)
-        elif sys.argv[1] == "-c": 
+        elif sys.argv[1] == "-e": 
             createDo(companies, years)
-        elif sys.argv[1] == "-d": 
-            EikonDownloader()
+        elif sys.argv[1] == "-f": 
+            checkFiles(companies)           
         else:
             print("Error: Read instructions")
     else:

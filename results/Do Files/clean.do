@@ -9,7 +9,7 @@ label var ric "RIC"
 label var investor_turnover_percentage "Investor Turnover Percentage"
 label var inv_port_n_secs_sold "Investor Portfolio Number of Securities Sold"
 
-*replace "NULL" with "."
+*replace "" with "."
 ds, has(type string)
 foreach v in `r(varlist)' {
 	replace `v' ="." if `v'=="NULL"
