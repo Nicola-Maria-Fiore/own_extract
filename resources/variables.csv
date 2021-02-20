@@ -5,6 +5,7 @@ TR.PctOfSharesOutHeld
 TR.SharesHeld
 TR.SharesHeldValue
 TR.InvestorFullName
+TR.InvestorFullName.investorID
 TR.FilingType
 TR.InvParentType
 TR.OwnTrnverRating
